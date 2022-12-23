@@ -71,11 +71,7 @@ const Login = () => {
             </div>
 
             <div className="form-control w-full my-5">
-              <input
-                type="submit"
-                value="Register"
-                className="btn btn-primary"
-              />
+              <input type="submit" value="Login" className="btn btn-primary" />
             </div>
           </form>
           <div className="my-5">

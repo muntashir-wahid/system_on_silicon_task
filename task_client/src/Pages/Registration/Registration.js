@@ -23,6 +23,19 @@ const Registration = () => {
 
   const submitHandler = (data) => {
     console.log(data);
+    const newUser = {
+      ...data,
+    };
+
+    fetch("http://localhost:5000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   return (
