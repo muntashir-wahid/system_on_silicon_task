@@ -1,0 +1,52 @@
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+require("dotenv").config();
+
+const app = express();
+
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello from the server side!");
+});
+
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.6ayglwi.mongodb.net/?retryWrites=true&w=majority`;
+
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
+
+async function run() {
+  try {
+    const database = client.db("dev_profile");
+    const usersCollection = database.collection("users");
+
+    app.post("/api/v1/users", async (req, res) => {
+      const user = req.body;
+      const resule = await usersCollection.insertOne(user);
+
+      user._id = resule.insertedId;
+
+      res.status(201).json({
+        status: "success",
+        data: {
+          user,
+        },
+      });
+    });
+  } finally {
+    // await client.close();
+  }
+}
+run().catch(console.dir);
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
