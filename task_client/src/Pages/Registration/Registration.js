@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Lottie from "react-lottie";
 import { useForm } from "react-hook-form";
 import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import registerAnimation from "../../assets/registerAnimation.json";
 import FormErrorMessage from "../../components/FormErrorMessage/FormErrorMessage";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../store/AuthProvider";
 
 const defaultOptions = {
   loop: true,
@@ -15,6 +16,9 @@ const defaultOptions = {
   },
 };
 const Registration = () => {
+  const { createUserHandler } = useContext(AuthContext);
+  // console.log(currUser);
+
   const {
     register,
     handleSubmit,
@@ -22,20 +26,11 @@ const Registration = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    console.log(data);
     const newUser = {
       ...data,
     };
 
-    fetch("http://localhost:5000/api/v1/users", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    createUserHandler(newUser);
   };
 
   return (
