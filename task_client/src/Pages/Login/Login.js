@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Lottie from "react-lottie";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import registerAnimation from "../../assets/registerAnimation.json";
 import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import FormErrorMessage from "../../components/FormErrorMessage/FormErrorMessage";
+import { AuthContext } from "../../store/AuthProvider";
 
 const defaultOptions = {
   loop: true,
@@ -16,6 +17,7 @@ const defaultOptions = {
 };
 
 const Login = () => {
+  const { loginHandler } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -23,7 +25,9 @@ const Login = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    console.log(data);
+    const { email, password } = data;
+
+    loginHandler(email, password);
   };
 
   return (
