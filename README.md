@@ -10,7 +10,7 @@
 
 ## How to navigate through the repo: 
 
-First, you need to clone or download the zip file of this repo. Then you will find two folders on it: 
+First, you need to clone or download the zip file of this repo. Then you will find two folders: 
 
 **task_client:** You can find the client-side source code created with create-react-app. So you need to install all the dependencies and run the *npm start* command to start the local host server.
 
