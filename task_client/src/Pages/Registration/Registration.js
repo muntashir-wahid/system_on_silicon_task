@@ -17,12 +17,12 @@ const defaultOptions = {
 };
 const Registration = () => {
   const { createUserHandler } = useContext(AuthContext);
-  // console.log(currUser);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const submitHandler = (data) => {
@@ -31,6 +31,7 @@ const Registration = () => {
     };
 
     createUserHandler(newUser);
+    reset();
   };
 
   return (

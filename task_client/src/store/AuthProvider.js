@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const defaultContext = {
   currUser: {},
   createUserHandler: (newUser) => {},
   logoutHandler: () => {},
   loginHandler: (email, password) => {},
+  isLoading: "",
 };
 
 export const AuthContext = createContext(defaultContext);
@@ -12,7 +14,8 @@ export const AuthContext = createContext(defaultContext);
 const AuthProvider = ({ children }) => {
   // Current user
   const [currUser, setCurrUser] = useState(null);
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   // Create new User
   const createUserHandler = (newUser) => {
@@ -28,11 +31,13 @@ const AuthProvider = ({ children }) => {
         if (data.status === "success") {
           setCurrUser(data?.data?.user);
           localStorage.setItem("userId", data?.data?.user?._id);
+          toast.success("Congrats!You have created an account successfully");
         }
 
         if (data.status === "fail") {
-          setError(data.message);
+          toast.error(data.message);
         }
+        setIsLoading(false);
       });
   };
 
@@ -49,17 +54,22 @@ const AuthProvider = ({ children }) => {
         if (data.status === "success") {
           setCurrUser(data?.data?.user);
           localStorage.setItem("userId", data?.data?.user?._id);
+          toast.success("Login successfull!");
         }
+
+        if (data.status === "fail") {
+          toast.error(data.message);
+        }
+        setIsLoading(false);
       });
   };
-
-  console.log(error);
 
   // Logout User
 
   const logoutHandler = () => {
     setCurrUser(null);
     localStorage.removeItem("userId");
+    toast.success("Logout successfull");
   };
 
   // Get Current user
@@ -68,19 +78,27 @@ const AuthProvider = ({ children }) => {
     const userId = localStorage.getItem("userId");
 
     if (userId) {
+      setIsLoading(true);
       fetch(`http://localhost:5000/api/v1/users/${userId}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.status === "success") {
             setCurrUser(data?.data?.user);
+            setIsLoading(false);
           }
         });
     }
-  }, []);
+  }, [isUpdated]);
 
   // Auth Value
-  const authInfo = { currUser, createUserHandler, loginHandler, logoutHandler };
+  const authInfo = {
+    currUser,
+    isLoading,
+    createUserHandler,
+    loginHandler,
+    logoutHandler,
+    setIsUpdated,
+  };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

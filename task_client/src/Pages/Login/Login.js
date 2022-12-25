@@ -22,12 +22,14 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const submitHandler = (data) => {
     const { email, password } = data;
 
     loginHandler(email, password);
+    reset();
   };
 
   return (
