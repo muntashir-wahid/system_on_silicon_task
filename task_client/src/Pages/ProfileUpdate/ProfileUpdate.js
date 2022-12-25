@@ -34,6 +34,7 @@ const ProfileUpdate = () => {
         }
       });
     reset();
+    setIsUpdated(false);
   };
 
   return (
