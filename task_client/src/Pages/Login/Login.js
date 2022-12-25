@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Lottie from "react-lottie";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import registerAnimation from "../../assets/registerAnimation.json";
 import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import FormErrorMessage from "../../components/FormErrorMessage/FormErrorMessage";
@@ -27,6 +28,7 @@ const Login = () => {
 
   const submitHandler = (data) => {
     const { email, password } = data;
+    toast("Loging in your account.Please wait...");
 
     loginHandler(email, password);
     reset();

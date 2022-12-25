@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Lottie from "react-lottie";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import registerAnimation from "../../assets/registerAnimation.json";
 import FormErrorMessage from "../../components/FormErrorMessage/FormErrorMessage";
@@ -29,7 +30,7 @@ const Registration = () => {
     const newUser = {
       ...data,
     };
-
+    toast("Account is creating.Please wait...");
     createUserHandler(newUser);
     reset();
   };
@@ -102,7 +103,7 @@ const Registration = () => {
                 {...register("imageUrl", {
                   required: "Image is required",
                 })}
-                placeholder="Ex: https://examplephoto.com"
+                placeholder="Ex: https://images.unsplash.com/photo-16..."
                 type="text"
                 className="input input-bordered w-full"
               />

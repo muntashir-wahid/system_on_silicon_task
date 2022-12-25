@@ -16,12 +16,12 @@ const Profile = () => {
         <div className="flex flex-col items-center md:flex-row  gap-8 w-full md:max-w-3xl mx-auto">
           <figure className="w-full md:w-1/2 overflow-hidden rounded-lg">
             <img
-              className="rounded-lg shadow-lg hover:scale-110 hover:transition-all"
+              className="w-full rounded-lg shadow-lg hover:scale-110 hover:transition-all"
               src={currUser?.imageUrl}
               alt={currUser?.fullName}
             />
           </figure>
-          <div className="text-xl space-y-3">
+          <div className="self-start text-xl space-y-3">
             <p>Full Name: {currUser?.fullName}</p>
             <p>Email: {currUser?.email}</p>
             <p>Password: {currUser?.password}</p>

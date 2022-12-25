@@ -5,7 +5,6 @@ import Login from "../../Pages/Login/Login";
 import Profile from "../../Pages/Profile/Profile";
 import ProfileUpdate from "../../Pages/ProfileUpdate/ProfileUpdate";
 import Registration from "../../Pages/Registration/Registration";
-import TermsAndConditions from "../../Pages/TermsAndConditions/TermsAndConditions";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
@@ -32,7 +31,6 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      { path: "terms", element: <TermsAndConditions /> },
     ],
   },
 ]);
