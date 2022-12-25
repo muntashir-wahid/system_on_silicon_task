@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
 
   // Create new User
   const createUserHandler = (newUser) => {
-    fetch("http://localhost:5000/api/v1/users", {
+    fetch("https://dev-profile-server.vercel.app/api/v1/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
   // Login user
 
   const loginHandler = (email, password) => {
-    fetch(`http://localhost:5000/api/v1/users?email=${email}`, {
+    fetch(`https://dev-profile-server.vercel.app/api/v1/users?email=${email}`, {
       headers: {
         password: password,
       },
@@ -79,7 +79,7 @@ const AuthProvider = ({ children }) => {
 
     if (userId) {
       setIsLoading(true);
-      fetch(`http://localhost:5000/api/v1/users/${userId}`)
+      fetch(`https://dev-profile-server.vercel.app/api/v1/users/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "success") {

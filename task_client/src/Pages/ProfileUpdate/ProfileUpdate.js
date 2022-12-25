@@ -18,13 +18,16 @@ const ProfileUpdate = () => {
   const submitHandler = (data) => {
     console.log(data);
 
-    fetch(`http://localhost:5000/api/v1/users/${currUser._id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://dev-profile-server.vercel.app/api/v1/users/${currUser._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
