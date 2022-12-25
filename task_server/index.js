@@ -93,6 +93,26 @@ async function run() {
         },
       });
     });
+
+    app.patch("/api/v1/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const body = req.body;
+      const updateDoc = {
+        $set: {
+          ...body,
+        },
+      };
+
+      const result = await usersCollection.updateOne(query, updateDoc);
+
+      res.status(200).json({
+        status: "success",
+        data: {
+          result,
+        },
+      });
+    });
   } finally {
     // await client.close();
   }
