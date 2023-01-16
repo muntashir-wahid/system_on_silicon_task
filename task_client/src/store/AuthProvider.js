@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
 
   // Create new User
   const createUserHandler = (newUser) => {
-    fetch("https://dev-profile-server.vercel.app/api/v1/users", {
+    fetch("http://localhost:5000/api/v1/users/register", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -29,12 +29,15 @@ const AuthProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          setCurrUser(data?.data?.user);
-          localStorage.setItem("userId", data?.data?.user?._id);
-          toast.success("Congrats!You have created an account successfully");
+          const { user } = data.data;
+          setCurrUser(user);
+          localStorage.setItem("userId", user?._id);
+          toast.success(
+            `Congrats ${user?.fullName}!Account created successfully`
+          );
         }
 
-        if (data.status === "fail") {
+        if (data.status !== "success") {
           toast.error(data.message);
         }
         setIsLoading(false);
@@ -44,7 +47,7 @@ const AuthProvider = ({ children }) => {
   // Login user
 
   const loginHandler = (email, password) => {
-    fetch(`https://dev-profile-server.vercel.app/api/v1/users?email=${email}`, {
+    fetch(`http://localhost:5000/api/v1/users?email=${email}`, {
       headers: {
         password: password,
       },
@@ -79,7 +82,7 @@ const AuthProvider = ({ children }) => {
 
     if (userId) {
       setIsLoading(true);
-      fetch(`https://dev-profile-server.vercel.app/api/v1/users/${userId}`)
+      fetch(`http://localhost:5000/api/v1/users/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "success") {
