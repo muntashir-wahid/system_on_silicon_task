@@ -46,21 +46,21 @@ const AuthProvider = ({ children }) => {
 
   // Login user
 
-  const loginHandler = (email, password) => {
-    fetch(`http://localhost:5000/api/v1/users?email=${email}`, {
-      headers: {
-        password: password,
-      },
+  const loginHandler = (user) => {
+    fetch("http://localhost:5000/api/v1/users/login", {
+      method: "POST",
+      body: JSON.stringify(user),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          setCurrUser(data?.data?.user);
-          localStorage.setItem("userId", data?.data?.user?._id);
+          const { user } = data?.data;
+          setCurrUser(user);
+          localStorage.setItem("userId", user?._id);
           toast.success("Login successfull!");
         }
 
-        if (data.status === "fail") {
+        if (data.status !== "success") {
           toast.error(data.message);
         }
         setIsLoading(false);

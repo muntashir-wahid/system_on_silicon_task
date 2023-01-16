@@ -27,10 +27,9 @@ const Login = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    const { email, password } = data;
     toast("Loging in your account.Please wait...");
 
-    loginHandler(email, password);
+    loginHandler(data);
     reset();
   };
 

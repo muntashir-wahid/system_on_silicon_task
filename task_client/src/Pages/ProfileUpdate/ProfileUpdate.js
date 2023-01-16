@@ -16,8 +16,6 @@ const ProfileUpdate = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    console.log(data);
-
     fetch(`http://localhost:5000/api/v1/users/${currUser._id}`, {
       method: "PATCH",
       headers: {
