@@ -79,7 +79,6 @@ exports.getUser = async (req, res) => {
 };
 
 // UPDATE A USER
-
 exports.updateUser = async (req, res) => {
   try {
     const options = { runValidators: true, new: true };
@@ -96,6 +95,24 @@ exports.updateUser = async (req, res) => {
       data: {
         user,
       },
+    });
+  } catch (err) {
+    console.error("💥", err);
+    res.status(500).json({
+      status: "error",
+      message: "Something very wrong.Please try again",
+    });
+  }
+};
+
+// DELETE A USER
+exports.deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+
+    res.status(204).json({
+      status: "success",
+      data: null,
     });
   } catch (err) {
     console.error("💥", err);

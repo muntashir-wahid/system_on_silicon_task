@@ -96,6 +96,7 @@ const AuthProvider = ({ children }) => {
   // Auth Value
   const authInfo = {
     currUser,
+    setCurrUser,
     isLoading,
     createUserHandler,
     loginHandler,

@@ -5,6 +5,7 @@ const {
   loginUser,
   getUser,
   updateUser,
+  deleteUser,
 } = require("./../controllers/userController");
 const removePasswordField = require("./../middlewares/removePasswordField");
 
@@ -17,5 +18,7 @@ router.route("/login").post(removePasswordField, loginUser);
 router
   .route("/:id")
   .get(removePasswordField, getUser)
-  .patch(removePasswordField, updateUser);
+  .patch(removePasswordField, updateUser)
+  .delete(deleteUser);
+
 module.exports = router;

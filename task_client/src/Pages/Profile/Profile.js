@@ -1,10 +1,27 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import { AuthContext } from "../../store/AuthProvider";
 
 const Profile = () => {
-  const { currUser } = useContext(AuthContext);
+  const { currUser, setCurrUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const accountDeleteHandler = async (id) => {
+    const res = await fetch(`http://localhost:5000/api/v1/users/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.status === 204 && res.ok) {
+      toast.success("Account deleted successfullly");
+      localStorage.removeItem("userId");
+      setCurrUser(null);
+      navigate("/");
+    } else {
+      toast.error("Something went wrong!");
+    }
+  };
 
   return (
     <div className="bg-base-100">
@@ -24,13 +41,20 @@ const Profile = () => {
           <div className="self-start text-xl space-y-3">
             <p>Full Name: {currUser?.fullName}</p>
             <p>Email: {currUser?.email}</p>
-            <p>Password: {currUser?.password}</p>
-            <Link
-              to={`/profile/${currUser?._id}/update`}
-              className="btn btn-primary"
-            >
-              Edit Profile
-            </Link>
+            <div className="space-x-4">
+              <Link
+                to={`/profile/${currUser?._id}/update`}
+                className="btn btn-primary"
+              >
+                Edit Profile
+              </Link>
+              <button
+                onClick={accountDeleteHandler.bind(null, currUser._id)}
+                className="btn btn-error"
+              >
+                Delete Account
+              </button>
+            </div>
           </div>
         </div>
       </SectionWrapper>
