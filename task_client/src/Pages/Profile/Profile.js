@@ -9,9 +9,12 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const accountDeleteHandler = async (id) => {
-    const res = await fetch(`http://localhost:5000/api/v1/users/${id}`, {
-      method: "DELETE",
-    });
+    const res = await fetch(
+      `https://dev-profile-server.vercel.app/api/v1/users/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (res.status === 204 && res.ok) {
       toast.success("Account deleted successfullly");
