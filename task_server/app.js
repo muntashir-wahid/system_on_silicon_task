@@ -3,6 +3,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const userRouter = require("./routes/userRoutes");
+const AppError = require("./utils/appError");
+const globalErrorHandler = require("./controllers/errorControllers");
 
 const app = express();
 
@@ -13,22 +15,9 @@ app.use(morgan("dev"));
 app.use("/api/v1/users", userRouter);
 
 app.all("*", (req, _, next) => {
-  const err = new Error(`Can't find ${req.originalUrl} on the server`);
-
-  err.statusCode = 404;
-  err.status = "fail";
-
-  next(err);
+  next(new AppError(`Can't find ${req.originalUrl} on the server`, 400));
 });
 
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
-
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  });
-});
+app.use(globalErrorHandler);
 
 module.exports = app;
